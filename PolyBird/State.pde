@@ -1,13 +1,28 @@
 class State {
   
-  void Update(){
+  State state;
+  PlayState playState;
+  
+  State(){
     
     
   }
   
-  void Draw() {
-    
+  void Update(){
     
   }
+  
+  void Draw() {
+
+  }
+  
+  /*private void initPlay(){
+    playState = new PlayState();
+    
+  }*/
+  
+  /*public void switchToPlay(){
+    state.initPlay();
+  }*/
   
 }
