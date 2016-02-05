@@ -16,7 +16,7 @@ class AABB {
   /*
    * This method should be called each update before collision detection to reset the colliding flag.
    */
-  public void resetColliding(){
+  public void resetColliding() {
     colliding = false;
   }
   /*
@@ -40,7 +40,7 @@ class AABB {
   public void draw() {
     noFill();
     stroke(255);
-    if(colliding) stroke(255, 0, 0);
+    if (colliding) stroke(255, 0, 0);
     rectMode(CORNERS);
     rect(xmin, ymin, xmax, ymax);
   }
@@ -50,7 +50,7 @@ class AABB {
    * @param AABB aabb  The other AABB to check against this object.
    * @return boolean  Whether or not the objects are colliding.
    */
-  public boolean checkCollision(AABB aabb){
+  public boolean checkCollision(AABB aabb) {
     if (xmax < aabb.xmin) return false;
     if (xmin > aabb.xmax) return false;
     if (ymax < aabb.ymin) return false;

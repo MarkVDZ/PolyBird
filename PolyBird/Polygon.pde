@@ -2,8 +2,6 @@
  * This class provides encapsulates the mathematical representation (points) of a
  * Polygon. This class can update, draw, and do collision detection between Polygon
  * objects.
- *
- * we are using a clockwise point ordering convention
  */
 class Polygon {
   /*
@@ -115,22 +113,25 @@ class Polygon {
       pointsTransformed[i] = p; // store (p) in the pointsTransformed array
     }
 
-    /////////////////////////////////////////////////////////////
-    //TODO: calculate edge normals and store them in the normals array.   
-    normals = new PVector[pointsTransformed.length];
-    for (int i = 0; i < pointsTransformed.length; i++) {
-
-      //find edge vector
-      int j = (i == pointsTransformed.length - 1) ? 0 : i + 1; //if i is last point, set j to 0
+    // TODO: calculate edge normals and store them in the normals array.   
+    PVector[] edges = new PVector[points.size()];
+    normals = new PVector[points.size()];
+    for (int i = 0; i < points.size(); i++)
+    {
+      int j = i + 1;
+      if (i >= pointsTransformed.length - 1) j = 0;
       PVector p1 = pointsTransformed[i];
       PVector p2 = pointsTransformed[j];
-      PVector edge = PVector.sub(p2, p1); //find vector between points
 
-      //find left hand perpendicular
-      normals[i] = new PVector(-edge.y, edge.x);
+      // Makes the edges of the shape by looping through the points
+      edges[i] = PVector.sub(p2, p1);
+
+      // Makes the normal of each edge made
+      normals[i] = new PVector(edges[i].y, -edges[i].x);
+
+      //Normalizes (sets the length to 1) each normal made from the edges (maybe unnecessary?)
       normals[i].normalize();
     }
-
 
     // update this object's AABB:
     aabb.recalc(pointsTransformed);
@@ -201,57 +202,51 @@ class Polygon {
    */
   boolean checkCollision(Polygon poly) {
 
-    if (aabb.checkCollision(poly.aabb)) {
+    if (!aabb.checkCollision(poly.aabb)) return false;
 
-      // TODO: add narrow-phase collision detection here!
-      // Use the normals array and project each object's transformed
-      // points onto an axis aligned with EVERY normal of BOTH objects.
-      // When doing projection, look for gaps between the objects.
-      
-      for (PVector n : normals){
-        
-        MinMax mm1 = projectAlongAxis(n); //this objects minmax
-        MinMax mm2 = poly.projectAlongAxis(n); //colliding objects minmax
-        
-        if(mm1.min > mm2.max) return false;
-        if(mm2.min > mm1.max) return false;
-      }
-      
-      for (PVector n : poly.normals){
-        
-        MinMax mm1 = projectAlongAxis(n); //this objects minmax
-        MinMax mm2 = poly.projectAlongAxis(n); //colliding objects minmax
-        
-        if(mm1.min > mm2.max) return false;
-        if(mm2.min > mm1.max) return false;
-      }
+    // TODO: add narrow-phase collision detection here!
+    // Use the normals array and project each object's transformed
+    // points onto an axis aligned with EVERY normal of BOTH objects.
+    // When doing projection, look for gaps between the objects.
 
+    for (PVector n : normals)
+    {
+      PVector mm1 = projectAlongAxis(n);
+      PVector mm2 = poly.projectAlongAxis(n);
 
-      return true;
-    }
-    return false;
-  }
-
-  MinMax projectAlongAxis(PVector axis) {
-    
-    float min = 0, max = 0;
-    int i = 0;
-    for (PVector p : pointsTransformed){
-      float v = p.dot(axis);
-      if(i == 0 || v < min) min = v;
-      if(i == 0 || v > max) max = v;
-      
-      i++;
+      if (mm1.y < mm2.x) return false;
+      if (mm1.x > mm2.y) return false;
     }
 
-    return new MinMax(min, max);
-  }
-}
+    // USE SEPARATING AXIS THEOREM WITH OTHER POLY'S NORMALS
+    for (PVector n : poly.normals)
+    {
+      PVector mm1 = projectAlongAxis(n);
+      PVector mm2 = poly.projectAlongAxis(n);
 
-class MinMax {
-  float min, max;
-  MinMax(float min, float max) {
-    this.min = min;
-    this.max = max;
+      if (mm1.y < mm2.x) return false;
+      if (mm1.x > mm2.y) return false;
+    }
+
+
+
+
+
+
+    return true;
+  }
+
+  //return pvector, x is min, y is max
+  PVector projectAlongAxis(PVector axis) {
+    PVector minMax = new PVector();
+
+    for (int i = 0; i < pointsTransformed.length; i++) {
+      float dot = pointsTransformed[i].dot(axis);
+
+      if (i == 0 || dot > minMax.y) minMax.y = dot;
+      if (i == 0 || dot < minMax.x) minMax.x = dot;
+    }
+
+    return minMax;
   }
 }
