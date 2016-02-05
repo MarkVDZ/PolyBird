@@ -38,11 +38,11 @@ class AABB {
    * This method draws the AABB. If the colliding flag is set to true, this is drawn in red. 
    */
   public void draw() {
-    noFill();
-    stroke(255);
-    if (colliding) stroke(255, 0, 0);
-    rectMode(CORNERS);
-    rect(xmin, ymin, xmax, ymax);
+    //noFill();
+    //stroke(255);
+    //if (colliding) stroke(255, 0, 0);
+    //rectMode(CORNERS);
+    //rect(xmin, ymin, xmax, ymax);
   }
   /*
    * Check for collision between this and another AABB.

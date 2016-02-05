@@ -4,6 +4,9 @@
  * objects.
  */
 class Polygon {
+  
+  color colour=255;
+  
   /*
    * This flag is set to false each update, and true during collision detection if it collides.
    * When true, this shape is drawn in red.
@@ -143,7 +146,7 @@ class Polygon {
 
     // set up stroke / fill:
     noStroke();
-    fill(255);
+    fill(colour);
     if (colliding) fill(255, 0, 0); // draw red if colliding this frame
 
     // draw the shape:
