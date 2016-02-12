@@ -6,6 +6,7 @@ class Player extends Polygon{
 
   float speed = 0;
   float gravity = 0.1;
+  boolean dead = false;
   
   
   
@@ -26,7 +27,9 @@ class Player extends Polygon{
   }
   void update() {
     
-   PVector p  = getPosition();//this is what i will be using to update for the physics
+    
+    
+    PVector p  = getPosition();//this is what i will be using to update for the physics
     
     speed = speed + gravity; //add gravity to speed
     
@@ -43,9 +46,10 @@ class Player extends Polygon{
       speed = speed * -0.95;
     }
     
-     setPosition(p);//update the physics based on the polygons PVectors
+    setPosition(p);//update the physics based on the polygons PVectors
     
     super.update();
+    
   }
   void jump() {
     speed=-4;
