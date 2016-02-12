@@ -49,6 +49,7 @@ class Player extends Polygon{
      if (p.y > height){
       dead = true;
     }
+    if (dead == true) ChangeStateLose();
     
     p.y = p.y + speed;//add speed to location
 
