@@ -1,26 +1,32 @@
 
 
 class PlayState extends State {
-  Obstacle[] obstacles;
+  ArrayList<Polygon> obstacles = new ArrayList<Polygon>();
   Player b = new Player();
   PlayState() {
-    obstacles = new Obstacle[20];
     for (int i = 0; i < 20; i++) {
-      obstacles[i] = new Obstacle();
+      Obstacle o = new Obstacle();
+      obstacles.add(o);
     }
   }
 
   void Update() {
     //Update();
-    for (Obstacle o : obstacles) o.update();
-    Keys.update();
+    for (Polygon o : obstacles) o.update();
     b.update();
+    b.checkCollisions(obstacles); 
+    
   
   }
 
   void Draw() {
     background(255);
-    for (Obstacle o : obstacles) o.draw();
+    for (Polygon o : obstacles) o.draw();
     b.draw();
+    
+    if (b.colliding) {
+      println("f");
+      ChangeState();
+    }
   }
 }

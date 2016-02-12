@@ -21,12 +21,12 @@ class Obstacle extends Polygon {
 
   void reset() {
 
-    int place = (int)random(0,1.9);
+    int place = (int)random(0,1.99);
     if(place == 1)
         setPosition(new PVector(random(800, 2000), random(-50, 50)));
     else
         setPosition(new PVector(random(800, 2000), random(350, 450)));
-    int shapeNum = (int)random(1, 4);
+    int shapeNum = (int)random(1, 6);
     switch (shapeNum) {
 
     case 1:
@@ -48,6 +48,21 @@ class Obstacle extends Polygon {
       addPoint(40, 180);
       addPoint(0, 30);
       addPoint(120, -20);
+      break;
+    case 5:
+      addPoint(10, 150);
+      addPoint(-10, 20);
+      addPoint(40, 10);
+      break;
+    case 6:
+      addPoint(40, 10);
+      addPoint(-30, -100);
+      addPoint(120, -20);
+      break;
+    case 7:
+      addPoint(-200, -10);
+      addPoint(0, 10);
+      addPoint(200, -20);
       break;
     }
   }

@@ -11,7 +11,7 @@ class Polygon {
    * This flag is set to false each update, and true during collision detection if it collides.
    * When true, this shape is drawn in red.
    */
-  private boolean colliding = false;
+  public boolean colliding = false;
   /*
    * This flag is set to false each update, and true during collision detection AFTER it has been
    * checked against ALL of its siblings. It is used to prevent each pair of objects from checking
@@ -147,7 +147,7 @@ class Polygon {
     // set up stroke / fill:
     noStroke();
     fill(colour);
-    if (colliding) fill(255, 0, 0); // draw red if colliding this frame
+    //if (colliding) fill(255, 0, 0); // draw red if colliding this frame
 
     // draw the shape:
     beginShape();

@@ -1,9 +1,5 @@
 class State {
-  
-  State state;
-  PlayState playState;
-  
-  State(){
+State(){
     
     
   }
