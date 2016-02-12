@@ -39,13 +39,25 @@ class Player extends Polygon{
     }
      
     
+    
+         
+     //if player goes above the screen 
+    if (p.y < 0){
+      p.y = 0; //set player at the top of the screen
+    }
+    
+     if (p.y > height){
+      dead = true;
+    }
+    
     p.y = p.y + speed;//add speed to location
 
+    /*
     //Dampening bounce effect for fun
     if (p.y > height) {
       speed = speed * -0.95;
     }
-    
+    */
     setPosition(p);//update the physics based on the polygons PVectors
     
     super.update();
